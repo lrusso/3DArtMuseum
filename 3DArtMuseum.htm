@@ -415,6 +415,8 @@
 					var checkerRotation1 = parseFloat(camera.rotation.y).toFixed(2);
 					var checkerRotation2 = parseFloat(destinyRotation).toFixed(2);
 
+					if (checkerRotation1=="-0.00"){checkerRotation1="0.00";}
+
 					if (checkerZ1==checkerZ2 && checkerRotation1==checkerRotation2)
 						{
 						camPos = null;
@@ -435,6 +437,11 @@
 						voiceGuide.play();
 						document.getElementById("info").style.display = "block";
 						document.getElementById("info").innerHTML = selectedObject.userData[1];
+						}
+						else
+						{
+						console.log(checkerRotation1);
+						console.log(checkerRotation2);
 						}
 					}
 
