@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>3D Art Museum</title>
+		<style>
+			body{margin:0;padding:0;overflow:hidden;-webkit-user-select:none;-moz-user-select:none;user-select:none;text-align:center;}
+			#content{width:100%;height:100%;position:fixed;left:0;right:0;top:0;bottom:0;margin:auto;max-width:100%;max-height:100%;overflow:hidden;text-align:center;}
+			#container{position:absolute;width:100%;height:100%;background-color:#303030;overflow:hidden;}
+			#controls{position:absolute;left:10px;top:10px;padding:10px;background:rgba(0,0,0,0.6);border-radius:15px;z-index:999;font-family:Arial;font-size:13px;color:white;}
+			#controls_minus{float:left;width:32px;height:32px;margin-left:5px;margin-right:10px;background-repeat:no-repeat;background-image:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB+IHGxEBCkZKDb8AAAGMSURBVFjD7Ze9SsRAEMd/EwJ+1iJ2ZyMidiJa3nG9xRWCj2Aj+PEIgi9gZangE1hZ2giClZ29+ACCnhZ/mz2UXHKZJHuCcAOBZMnu/zeTyewsTGxMJglJpe/ZuMSHhCxfKqkpsCWpPY6IeBba14+tlAnmXbHEJanr9bwxQI74EECR0CiIxCsOnNf9E/IScACRxBQvyvQiiFKAOp4HoXkPoCRSSUkQ2c6BW68Q7g7QAi7N7C2bbIVRkLSh+tYNa8xJeg9jT5IWwvhSNvGyyZgA0xGK3ydwG+7XgOsQ8peyKCQxSq+ZfQE7wGkY6kja9MyNAhAgBJwBg4//twCDKFddOxqAJAMOfu2wD555aUTvr4C9cH8H3Hsj0I/g/RTQC4/PwK6ZSdJithBl60MKPAb6vELUciZgX1IPWAYuzOwjCL029ezEU4hy5s14d0YPxHEVgFFNSO2+QNKRB6CKeOXGpACicUNSFeLQ+wk8UYkBsdq0KbWaEG1g1sxuvOeCoqbkfx5MauyUk7NqoX0D1a6Lyd14PWQAAAAASUVORK5CYII=');}
+			#controls_plus{float:left;width:32px;height:32px;margin-right:5px;background-repeat:no-repeat;background-image:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB+IHGxA4BK60xzUAAAKASURBVFjD7Zc7aFRREIb/c7PRlfhAIVHjC0VQkUAKjQYLybqVIhZa2ViksxETLaysBNFKLZQEBSWgoCBqYYyghaABRSTaGCG+0Do+wDUx+Wzm4nDdbDa7N9pkYJnZf+bcmXPPPM6VZmiaCNgGbPlfzpv4Q31Ac9oOtgJtJfRLgPcuiBGgEwhpOD/oHryuhF0dcAz44ewvAFFazgHyZaxZC7x2a86l5fyvAIAM8AAYAHIOrweeuXX703BeLICVCX0PkDXdfGDI8C9AQ7XOix4BsA/45GyuAzWm2+HwrmqdT5gDwFzgtrM77XSXDRsFGgREwHngReI3wOSUdw/OAe3ALPtfC/Sa3S9glSvhmDoEbKJyyruSi8vtVXy+QCPw1fAzhgXgjWG9kaRsCr1pRNJ9kzdKuipJIYTPkq4ZfgAIIQQk3TWsJUqjM4YQRiXtkXTCoBzQYvIt4wskNZr8zvjCKK32bDs7KYl4d8aHnNl64x9iIEp7Djk5KoLVGB9PPQAbNIckxQPnqfHVzmzQ+LIYyKS4+x5JcYt9JKnf5N3GC5I+mrzc+LCAzSmU4WygYNggsNSN5WHf+awM4x5zLyPpuUXfmthRlHh9pRLwJ7BX0hpJ3SGEgrXfbsv+cUmnzLxZUpPJfZOd69EKW/Ec4IazO+t0Xa4VLy4nuY5McRjtBN46mztAxnTbHX5pKhneWeY4XpHQ3wTqTDfPjePvcZ5UG0QygFrgifX6XQ5fBPS7de2V1npHGUcQ/OXT3spLt+ZiVZfTRBAbSthlgcPAN2d/Jc6Hartem3/FRfT1buQCjAHH45vRv/gwaXbOHwOtE/aQaQogSMpLGpP00CblDBWl3zD3hBVJlgzgAAAAAElFTkSuQmCC');}
+			#info{position:absolute;left:0px;right:0px;bottom:20px;width:95%;margin:0 auto;padding:10px;background:rgba(0,0,0,0.6);border-radius:15px;z-index:999;font-family:Arial;font-size:16px;color:white;display:none;}
+			#about{position:absolute;right:10px;top:10px;padding-top:10px;padding-bottom:10px;padding-left:15px;padding-right:15px;background:rgba(0,0,0,0.6);border-radius:15px;z-index:999;font-family:Arial;font-size:16px;line-height:32px;color:white;}			
+		</style>
+	</head>
+	<body>
+		<div id="content">
+			<div id="container"></div>
+		</div>
+		<div id="controls"><div id="controls_minus"></div><div id="controls_plus"></div></div>
+		<div id="info"></div>
+		<div id="about">por LRusso.com</div>
+
+		<script src="3DArtMuseum.js"></script>
+		<script>
+			var container, light;
+			var camera, scene, renderer, raycaster, mouse;
+			var objects;
+			var selectedObject;
+			var objectDescription;
+
+			var voiceGuide;
+			var voiceGuideVolume = 1;
+
+			var camPos = null;
+			var targetPos = null;
+
+			var targetRotation = 0;
+			var targetRotationOnMouseDown = 0;
+			var targetObject;
+			var targetObjectOffsetY = 0;
+			var mouseX = 0;
+			var mouseXOnMouseDown = 0;
+
+			var windowHalfX;
+			var windowHalfY;
+
+			function init()
+				{
+				objects = [];
+				container = document.getElementById("container");
+				container.innerHTML= "";
+
+				windowHalfX = window.innerWidth / 2;
+				windowHalfY = window.innerHeight / 2;
+
+				camera = new THREE.PerspectiveCamera(37.8,window.innerWidth/(window.innerHeight),1,100000);
+
+				raycaster = new THREE.Raycaster();
+				mouse = new THREE.Vector2();
+
+				scene = new THREE.Scene();
+				scene.background = new THREE.Color(0x304040);
+
+				light = new THREE.HemisphereLight(0xE8E8E8,0x000000,1);
+				light.position.set(0,0,0);
+				scene.add(light);
+
+				group = new THREE.Group();
+				scene.add(group);
+
+				camera.position.set(0,0,195);
+				camera.lookAt(scene.position);	
+
+				// ADDING FLOOR
+				var floorTexture = new THREE.ImageUtils.loadTexture("Texture_Floor.jpg");
+				floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping; 
+				floorTexture.repeat.set(15,10);
+				var floorMaterial = new THREE.MeshBasicMaterial({map: floorTexture, side: THREE.DoubleSide });
+				var floorGeometry = new THREE.PlaneGeometry(1000, 1000, 0, 0);
+				var floor = new THREE.Mesh(floorGeometry, floorMaterial);
+				floor.position.y = -40;
+				floor.rotation.x = Math.PI / 2;
+				scene.add(floor);
+
+				// ADDING CEIL
+				var ceilTexture = new THREE.ImageUtils.loadTexture("Texture_Ceil.jpg");
+				ceilTexture.wrapS = ceilTexture.wrapT = THREE.RepeatWrapping; 
+				ceilTexture.repeat.set(42,42);
+				var ceilMaterial = new THREE.MeshBasicMaterial({map: ceilTexture, side: THREE.DoubleSide });
+				var ceilGeometry = new THREE.PlaneGeometry(700, 1000, 0, 0);
+				var ceil = new THREE.Mesh(ceilGeometry, ceilMaterial);
+				ceil.position.y = 47;
+				ceil.rotation.x = Math.PI / 2;
+				scene.add(ceil);
+
+				// ADDING WALLS
+				var wallTexture = new THREE.ImageUtils.loadTexture("Texture_Wall.jpg");
+				var wallMaterial = new THREE.MeshBasicMaterial({map: wallTexture, side: THREE.DoubleSide });
+				var wallGeometry1 = new THREE.PlaneGeometry(500, 90, 0, 0);
+				var wallGeometry2 = new THREE.PlaneGeometry(600, 90, 0, 0);
+				var wallGeometry3 = new THREE.PlaneGeometry(100, 90, 0, 0);
+				var wallGeometry4 = new THREE.PlaneGeometry(600, 90, 0, 0);
+
+				var wall1 = new THREE.Mesh(wallGeometry1, wallMaterial); // FRONT
+				var wall2 = new THREE.Mesh(wallGeometry2, wallMaterial); // RIGHT
+				var wall3 = new THREE.Mesh(wallGeometry3, wallMaterial); // BACK
+				var wall4 = new THREE.Mesh(wallGeometry4, wallMaterial); // LEFT
+
+				wall1.position.y = 5;
+				wall1.position.z = -230;
+				wall1.rotation.x = 0;
+
+				wall2.position.y = 5;
+				wall2.position.z = 0;
+				wall2.position.x = -50;
+				wall2.rotation.y = Math.PI /2;
+
+				wall3.position.y = 5;
+				wall3.position.z = 270;
+				wall3.rotation.x = 0;
+
+				wall4.position.y = 5;
+				wall4.position.z = 0;
+				wall4.position.x = 50;
+				wall4.rotation.y = Math.PI /2;
+
+				scene.add(wall1);
+				scene.add(wall2);
+				scene.add(wall3);
+				scene.add(wall4);
+
+				// ADDING CARPETS
+				var carpetTexture1 = new THREE.ImageUtils.loadTexture("Texture_Carpet.jpg");
+				carpetTexture1.wrapS = carpetTexture1.wrapT = THREE.RepeatWrapping; 
+				carpetTexture1.repeat.set(5,15);
+				var carpetMaterial1 = new THREE.MeshBasicMaterial({map: carpetTexture1, side: THREE.DoubleSide });
+				var carpetGeometry1 = new THREE.PlaneGeometry(50, 380, 0, 0);
+				var carpet1 = new THREE.Mesh(carpetGeometry1, carpetMaterial1);
+
+				carpet1.position.y = -39;
+				carpet1.position.z = 6;
+				carpet1.rotation.x = Math.PI / 2;
+
+				scene.add(carpet1);
+
+				// ADDING IMAGE 01
+				var image01Image = new THREE.ImageUtils.loadTexture("Art_01.jpg");
+				image01Image.wrapS = image01Image.wrapT = THREE.RepeatWrapping; 
+				image01Image.repeat.set(1,1);
+				var image01Material = new THREE.MeshBasicMaterial({map:image01Image});
+				var image01Geometry = new THREE.PlaneGeometry(42,30,0,0);
+				var image01 = new THREE.Mesh(image01Geometry,image01Material);
+				image01.position.y = 0;
+				image01.position.z = 269;
+				image01.position.x = 0;
+				image01.rotation.y = -Math.PI;
+				objectDescription = [];
+				objectDescription[0] = "Art_01.mp3";
+				objectDescription[1] = "Guernica, es un famoso cuadro de Pablo Picasso, pintado entre los meses de Mayo y Junio de 1937, cuyo t&iacute;tulo alude al bombardeo de Guernica, ocurrido el 26 de Abril de dicho a&ntilde;o, durante la guerra civil espa&ntilde;ola. Fue realizado por encargo del Director General de Bellas Artes, Josep Renau a petici&oacute;n del Gobierno de la Segunda Rep&uacute;blica Espa&ntilde;ola para ser expuesto en el pabell&oacute;n espa&ntilde;ol durante la Exposici&oacute;n Internacional de 1937 en Par&iacute;s, con el fin de atraer la atenci&oacute;n del p&uacute;blico hacia la causa republicana en plena guerra civil espa&ntilde;ola.";
+				image01.userData = objectDescription;
+				scene.add(image01);
+				objects.push(image01);
+
+				// ADDING IMAGE 02
+				var image02Image = new THREE.ImageUtils.loadTexture("Art_02.jpg");
+				image02Image.wrapS = image02Image.wrapT = THREE.RepeatWrapping; 
+				image02Image.repeat.set(1,1);
+				var image02Material = new THREE.MeshBasicMaterial({map:image02Image});
+				var image02Geometry = new THREE.PlaneGeometry(35,30,0,0);
+				var image02 = new THREE.Mesh(image02Geometry,image02Material);
+				image02.position.y = 0;
+				image02.position.z = 200;
+				image02.position.x = -49;
+				image02.rotation.y = Math.PI/2;
+				objectDescription = [];
+				objectDescription[0] = "Art_02.mp3";
+				objectDescription[1] = "La noche estrellada, es la obra maestra del pintor postimpresionista Vincent Van Gogh. El cuadro lo realiz&oacute; en el sanatorio Saint-R&eacute;my-de-Provence, donde se recluy&oacute; hacia el final de su vida. Fue pintada a mediados de 1889, trece meses antes de su muerte. Desde 1941 forma parte de la colecci&oacute;n permanente del Museo de Arte Moderno de Nueva York. El cuadro ha sido reproducido en numerosas ocasiones y es conocida como una de las pinturas m&aacute;s famosas de la historia. Us&oacute; &oacute;leo humedecido y pinceles finos para realizar la obra.";
+				image02.userData = objectDescription;
+				scene.add(image02);
+				objects.push(image02);
+
+				// ADDING IMAGE 03
+				var image03Image = new THREE.ImageUtils.loadTexture("Art_03.jpg");
+				image03Image.wrapS = image03Image.wrapT = THREE.RepeatWrapping; 
+				image03Image.repeat.set(1,1);
+				var image03Material = new THREE.MeshBasicMaterial({map:image03Image});
+				var image03Geometry = new THREE.PlaneGeometry(22,30,0,0);
+				var image03 = new THREE.Mesh(image03Geometry,image03Material);
+				image03.position.y = 0;
+				image03.position.z = 125;
+				image03.position.x = -49;
+				image03.rotation.y = Math.PI/2;
+				objectDescription = [];
+				objectDescription[0] = "Art_03.mp3";
+				objectDescription[1] = "El grito, es el t&iacute;tulo de cuatro cuadros del noruego Edvard Munch. La versi&oacute;n m&aacute;s famosa se encuentra en la Galer&iacute;a Nacional de Noruega y fue completada en 1893. Otras dos versiones del cuadro se encuentran en el Museo Munch, mientras que la cuarta versi&oacute;n pertenece a una colecci&oacute;n particular. En 1895, Munch realiz&oacute; tambi&eacute;n una litograf&iacute;a con el mismo t&iacute;tulo.";
+				image03.userData = objectDescription;
+				scene.add(image03);
+				objects.push(image03);
+
+				// ADDING IMAGE 04
+				var image04Image = new THREE.ImageUtils.loadTexture("Art_04.jpg");
+				image04Image.wrapS = image04Image.wrapT = THREE.RepeatWrapping; 
+				image04Image.repeat.set(1,1);
+				var image04Material = new THREE.MeshBasicMaterial({map:image04Image});
+				var image04Geometry = new THREE.PlaneGeometry(20,30,0,0);
+				var image04 = new THREE.Mesh(image04Geometry,image04Material);
+				image04.position.y = 0;
+				image04.position.z = 50;
+				image04.position.x = -49;
+				image04.rotation.y = Math.PI/2;
+				objectDescription = [];
+				objectDescription[0] = "Art_04.mp3";
+				objectDescription[1] = "El Retrato de Lisa Gherardini, esposa de Francesco del Giocondo, m&aacute;s conocido como La Gioconda o Mona Lisa, es una obra pict&oacute;rica del pintor renacentista italiano Leonardo da Vinci. Fue adquirida por el rey Francisco I de Francia a comienzos del siglo XVI y desde entonces es propiedad del Estado Franc&eacute;s. Se halla expuesta en el Museo del Louvre de Par&iacute;s, siendo, sin duda, la joya de sus colecciones.";
+				image04.userData = objectDescription;
+				scene.add(image04);
+				objects.push(image04);
+
+				// ADDING IMAGE 05
+				var image05Image = new THREE.ImageUtils.loadTexture("Art_05.jpg");
+				image05Image.wrapS = image05Image.wrapT = THREE.RepeatWrapping; 
+				image05Image.repeat.set(1,1);
+				var image05Material = new THREE.MeshBasicMaterial({map:image05Image});
+				var image05Geometry = new THREE.PlaneGeometry(46,30,0,0);
+				var image05 = new THREE.Mesh(image05Geometry,image05Material);
+				image05.position.y = 0;
+				image05.position.z = -50;
+				image05.position.x = -49;
+				image05.rotation.y = Math.PI/2;
+				objectDescription = [];
+				objectDescription[0] = "Art_05.mp3";
+				objectDescription[1] = "La &uacute;ltima cena, es una pintura mural original de Leonardo da Vinci ejecutada entre 1495 y 1498. Se encuentra en la pared sobre la que se pint&oacute; originariamente, en el refectorio del convento dominico de Santa Maria delle Grazie, en Mil&aacute;n, declarado Patrimonio de la Humanidad por la Unesco en 1980. La pintura fue elaborada para su patr&oacute;n, el duque Ludovico Sforza de Mil&aacute;n. No es un fresco tradicional, sino un mural ejecutado al temple y &oacute;leo sobre dos capas de preparaci&oacute;n de yeso extendidas sobre enlucido.";
+				image05.userData = objectDescription;
+				scene.add(image05);
+				objects.push(image05);
+
+				// ADDING IMAGE 06
+				var image06Image = new THREE.ImageUtils.loadTexture("Art_06.jpg");
+				image06Image.wrapS = image06Image.wrapT = THREE.RepeatWrapping; 
+				image06Image.repeat.set(1,1);
+				var image06Material = new THREE.MeshBasicMaterial({map:image06Image});
+				var image06Geometry = new THREE.PlaneGeometry(29,30,0,0);
+				var image06 = new THREE.Mesh(image06Geometry,image06Material);
+				image06.position.y = 0;
+				image06.position.z = -160;
+				image06.position.x = -49;
+				image06.rotation.y = Math.PI/2;
+				objectDescription = [];
+				objectDescription[0] = "Art_06.mp3";
+				objectDescription[1] = "Las meninas o La familia de Felipe IV, se considera la obra maestra del pintor del Siglo de Oro espa&ntilde;ol Diego Vel&aacute;zquez. Acabado en 1656, seg&uacute;n Antonio Palomino, fecha un&aacute;nimemente aceptada por la cr&iacute;tica, corresponde al &uacute;ltimo periodo estil&iacute;stico del artista, el de plena madurez. Es una pintura realizada al &oacute;leo sobre un lienzo de grandes dimensiones formado por tres bandas de tela cosidas verticalmente, donde las figuras situadas en primer plano se representan a tama&ntilde;o natural. Es una de las obras pict&oacute;ricas m&aacute;s analizadas y comentadas en el mundo del arte.";
+				image06.userData = objectDescription;
+				scene.add(image06);
+				objects.push(image06);
+
+				// ADDING IMAGE 07
+				var image07Image = new THREE.ImageUtils.loadTexture("Art_07.jpg");
+				image07Image.wrapS = image07Image.wrapT = THREE.RepeatWrapping; 
+				image07Image.repeat.set(1,1);
+				var image07Material = new THREE.MeshBasicMaterial({map:image07Image});
+				var image07Geometry = new THREE.PlaneGeometry(40,30,0,0);
+				var image07 = new THREE.Mesh(image07Geometry,image07Material);
+				image07.position.y = 0;
+				image07.position.z = 200;
+				image07.position.x = 49;
+				image07.rotation.y = -(Math.PI/2);
+				objectDescription = [];
+				objectDescription[0] = "Art_07.mp3";
+				objectDescription[1] = "La persistencia de la memoria, conocido tambi&eacute;n como Los relojes blandos o Los relojes derretidos, es un famoso cuadro del pintor espa&ntilde;ol Salvador Dal&iacute; pintado en 1931. La pintura fue exhibida en la primera exposici&oacute;n individual de Dal&iacute; en la Galerie Pierre Colle de Par&iacute;s, del 3 al 15 de Junio de 1931, y en Enero de 1932 en una exposici&oacute;n en la Julien Levy Gallery de Nueva York. Se conserva en el MoMA (Museo de Arte Moderno) de Nueva York, donde lleg&oacute; en 1934. Se realiz&oacute; mediante la t&eacute;cnica del &oacute;leo sobre lienzo con un estilo surrealista.";
+				image07.userData = objectDescription;
+				scene.add(image07);
+				objects.push(image07);
+
+				// ADDING IMAGE 08
+				var image08Image = new THREE.ImageUtils.loadTexture("Art_08.jpg");
+				image08Image.wrapS = image08Image.wrapT = THREE.RepeatWrapping; 
+				image08Image.repeat.set(1,1);
+				var image08Material = new THREE.MeshBasicMaterial({map:image08Image});
+				var image08Geometry = new THREE.PlaneGeometry(30,30,0,0);
+				var image08 = new THREE.Mesh(image08Geometry,image08Material);
+				image08.position.y = 0;
+				image08.position.z = 125;
+				image08.position.x = 49;
+				image08.rotation.y = -(Math.PI/2);
+				objectDescription = [];
+				objectDescription[0] = "Art_08.mp3";
+				objectDescription[1] = "El Juicio Final o El Juicio Universal, es el mural realizado al fresco por Miguel &Aacute;ngel para decorar el &aacute;bside de la Capilla Sixtina. Comenz&oacute; a pintarlo 25 a&ntilde;os despu&eacute;s de acabar de pintar la b&oacute;veda de la capilla.";
+				image08.userData = objectDescription;
+				scene.add(image08);
+				objects.push(image08);
+
+				// ADDING IMAGE 09
+				var image09Image = new THREE.ImageUtils.loadTexture("Art_09.jpg");
+				image09Image.wrapS = image09Image.wrapT = THREE.RepeatWrapping; 
+				image09Image.repeat.set(1,1);
+				var image09Material = new THREE.MeshBasicMaterial({map:image09Image});
+				var image09Geometry = new THREE.PlaneGeometry(53,30,0,0);
+				var image09 = new THREE.Mesh(image09Geometry,image09Material);
+				image09.position.y = 0;
+				image09.position.z = 50;
+				image09.position.x = 49;
+				image09.rotation.y = -(Math.PI/2);
+				objectDescription = [];
+				objectDescription[0] = "Art_09.mp3";
+				objectDescription[1] = "La creaci&oacute;n de Ad&aacute;n, es un fresco en el techo de la Capilla Sixtina, pintado por Miguel &Aacute;ngel alrededor del a&ntilde;o 1511. Ilustra el episodio b&iacute;blico del G&eacute;nesis en el cual Dios le da vida a Ad&aacute;n, el primer hombre. Cronol&oacute;gicamente es el cuarto de los paneles que representan episodios del G&eacute;nesis en el techo de la capilla, fue de los &uacute;ltimos en ser completados y es una de las obras de arte m&aacute;s apreciadas y reconocidas en el mundo.";
+				image09.userData = objectDescription;
+				scene.add(image09);
+				objects.push(image09);
+
+				// ADDING IMAGE 10
+				var image10Image = new THREE.ImageUtils.loadTexture("Art_10.jpg");
+				image10Image.wrapS = image10Image.wrapT = THREE.RepeatWrapping; 
+				image10Image.repeat.set(1,1);
+				var image10Material = new THREE.MeshBasicMaterial({map:image10Image});
+				var image10Geometry = new THREE.PlaneGeometry(48,30,0,0);
+				var image10 = new THREE.Mesh(image10Geometry,image10Material);
+				image10.position.y = 0;
+				image10.position.z = -50;
+				image10.position.x = 49;
+				image10.rotation.y = -(Math.PI/2);
+				objectDescription = [];
+				objectDescription[0] = "Art_10.mp3";
+				objectDescription[1] = "Tarde de domingo en la isla de la Grande Jatte, es un cuadro del pintor neoimpresionista franc&eacute;s Georges Seurat, ejemplo de puntillismo considerado por muchos una de las pinturas m&aacute;s relevantes del Siglo XIX.";
+				image10.userData = objectDescription;
+				scene.add(image10);
+				objects.push(image10);
+
+				// ADDING IMAGE 11
+				var image11Image = new THREE.ImageUtils.loadTexture("Art_11.jpg");
+				image11Image.wrapS = image11Image.wrapT = THREE.RepeatWrapping; 
+				image11Image.repeat.set(1,1);
+				var image11Material = new THREE.MeshBasicMaterial({map:image11Image});
+				var image11Geometry = new THREE.PlaneGeometry(39,30,0,0);
+				var image11 = new THREE.Mesh(image11Geometry,image11Material);
+				image11.position.y = 0;
+				image11.position.z = -160;
+				image11.position.x = 49;
+				image11.rotation.y = -(Math.PI/2);
+				objectDescription = [];
+				objectDescription[0] = "Art_11.mp3";
+				objectDescription[1] = "La ronda de noche o La ronda nocturna, es el nombre por el que se conoce com&uacute;nmente a esta obra maestra del pintor neerland&eacute;s Rembrandt, pintada entre 1640 y 1642. Este cuadro es una de las joyas de la exposici&oacute;n permanente del Rijksmuseum de &Aacute;msterdam, especializada en arte neerland&eacute;s.";
+				image11.userData = objectDescription;
+				scene.add(image11);
+				objects.push(image11);
+
+				// ADDING IMAGE 12
+				var image12Image = new THREE.ImageUtils.loadTexture("Art_12.jpg");
+				image12Image.wrapS = image12Image.wrapT = THREE.RepeatWrapping; 
+				image12Image.repeat.set(1,1);
+				var image12Material = new THREE.MeshBasicMaterial({map:image12Image});
+				var image12Geometry = new THREE.PlaneGeometry(47,30,0,0);
+				var image12 = new THREE.Mesh(image12Geometry,image12Material);
+				image12.position.y = 0;
+				image12.position.z = -229;
+				image12.position.x = 0;
+				image12.rotation.y = 0;
+				objectDescription = [];
+				objectDescription[0] = "Art_12.mp3";
+				objectDescription[1] = "El nacimiento de Venus es una pintura de Sandro Botticelli. Representa una de las obras cumbres del maestro italiano. Fue realizada al temple sobre lienzo y se conserva en la Galer&iacute;a Uffizi, Florencia.";
+				image12.userData = objectDescription;
+				scene.add(image12);
+				objects.push(image12);
+
+				renderer = new THREE.WebGLRenderer({antialias:false});
+				renderer.setSize(window.innerWidth,window.innerHeight);
+
+				container.appendChild(renderer.domElement);
+
+				requestAnimationFrame(animate);
+
+				window.addEventListener("resize", onWindowResize, false);
+				document.addEventListener("mousedown", onDocumentMouseDown, false);
+				document.addEventListener("touchstart", onDocumentTouchStart, false);
+				document.addEventListener("touchmove", onDocumentTouchMove, false);
+				}
+
+			function onWindowResize()
+				{
+				camera.aspect = window.innerWidth / (window.innerHeight);
+				camera.updateProjectionMatrix();
+				renderer.setSize(window.innerWidth, window.innerHeight);
+				}
+
+			function animate()
+				{
+				requestAnimationFrame(animate);
+
+				// FOR ROTATION WHEN A PICTURE IS NOT SELECTED
+				if (camPos==null)
+					{
+					var _iR = unwrap([camera.rotation.y, targetRotation], Math.PI*2);
+					var _dR = _iR[1] - _iR[0];
+					if(Math.abs(_dR) > 0.002)
+						{
+						_rY = camera.rotation.y + (_dR * 0.06);
+						camera.rotation.y = _rY;
+
+						var cameraDegrees = (camera.rotation.y * 180 / Math.PI).toFixed(0);
+						if (parseFloat(cameraDegrees)>parseFloat(360) || parseFloat(cameraDegrees)<parseFloat(-360))
+							{
+							camera.rotation.y = (0 * Math.PI)/180;
+							}
+						}
+					}
+
+				// FOR MOVING TO A SELECTED PICTURE
+				else if (camPos!=null)
+					{
+					camPos.lerp(targetPos, 0.04);
+	    			camera.position.copy(camPos);
+
+					camera.rotation.y = lerp(camera.rotation.y,destinyRotation,0.04);
+
+					var checkerZ1 = parseFloat(camera.position.z).toFixed(0);
+					var checkerZ2 = parseFloat(targetPos.z).toFixed(0);
+					var checkerRotation1 = parseFloat(camera.rotation.y).toFixed(2);
+					var checkerRotation2 = parseFloat(destinyRotation).toFixed(2);
+
+					if (checkerZ1==checkerZ2 && checkerRotation1==checkerRotation2)
+						{
+						camPos = null;
+						targetPos = null;
+						targetRotation = camera.rotation.y;
+
+						// WHEN THE CAMERA IS IN FRONT OF THE PICTURE, THE AUDIO BEGINS
+						if (voiceGuide!=undefined)
+							{
+							voiceGuide.pause();
+							}
+						voiceGuide = new Audio(selectedObject.userData[0]);
+						voiceGuide.onended = function()
+							{
+							document.getElementById("info").style.display = "none";
+							};
+						voiceGuide.volume = voiceGuideVolume;
+						voiceGuide.play();
+						document.getElementById("info").style.display = "block";
+						document.getElementById("info").innerHTML = selectedObject.userData[1];
+						}
+					}
+
+				renderer.render(scene,camera);
+				}
+
+    		function lerp(value1, value2, amount)
+    			{
+        		amount = amount < 0 ? 0 : amount;
+        		amount = amount > 1 ? 1 : amount;
+        		return value1 + (value2 - value1) * amount;
+    			}
+
+			function onDocumentMouseMove(event)
+				{
+				mouseX = event.clientX - windowHalfX;
+				targetRotation = targetRotationOnMouseDown + (mouseX - mouseXOnMouseDown) * 0.0035;
+				}
+
+			function onDocumentMouseUp(event)
+				{
+				document.removeEventListener("mousemove", onDocumentMouseMove, false);
+				document.removeEventListener("mouseup", onDocumentMouseUp, false);
+				document.removeEventListener("mouseout", onDocumentMouseOut, false);
+				}
+
+			function onDocumentMouseOut(event)
+				{
+				document.removeEventListener("mousemove", onDocumentMouseMove, false);
+				document.removeEventListener("mouseup", onDocumentMouseUp, false);
+				document.removeEventListener("mouseout", onDocumentMouseOut, false);
+				}
+
+			function onDocumentTouchStart(event)
+				{
+				if (event.touches.length == 1)
+					{
+					event.preventDefault();
+					mouseXOnMouseDown = event.touches[ 0 ].pageX - windowHalfX;
+					targetRotationOnMouseDown = targetRotation;
+					}
+				}
+
+			function onDocumentTouchMove(event)
+				{
+				if (event.touches.length == 1)
+					{
+					event.preventDefault();
+					mouseX = event.touches[ 0 ].pageX - windowHalfX;
+					targetRotation = targetRotationOnMouseDown + (mouseX - mouseXOnMouseDown) * 0.002;
+					}
+				}
+
+			var destinyRotation = null;
+
+			function onDocumentMouseDown(event)
+				{
+				event.preventDefault();
+				document.addEventListener("mousemove", onDocumentMouseMove, false);
+				document.addEventListener("mouseup", onDocumentMouseUp, false);
+				document.addEventListener("mouseout", onDocumentMouseOut, false);
+				mouseXOnMouseDown = event.clientX - windowHalfX;
+				targetRotationOnMouseDown = targetRotation;
+
+				// CHECKING IF THE USER CLICKED IN A PICTURE
+				if (camPos==null)
+					{
+					mouse.x = (event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
+					mouse.y = - (event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
+					raycaster.setFromCamera(mouse,camera);
+					var intersects = raycaster.intersectObjects(objects);
+					if (intersects.length>0)
+						{
+						if (voiceGuide!=undefined)
+							{
+							voiceGuide.pause();
+							}
+						document.getElementById("info").style.display = "none";
+
+						selectedObject = intersects[0].object;
+
+						var cameraDegrees = (camera.rotation.y * 180 / Math.PI).toFixed(2);
+						var objectDegrees = (selectedObject.rotation.y * 180 / Math.PI).toFixed(2);
+
+						if (parseFloat(cameraDegrees)<parseFloat(-180))
+							{
+							cameraDegrees = parseFloat(cameraDegrees) + parseFloat(180);
+
+							cameraDegrees = (parseFloat(cameraDegrees) + parseFloat(180)) % 360; //angulo opuesto
+
+							camera.rotation.y = (cameraDegrees * Math.PI)/180;
+							cameraDegrees = (camera.rotation.y * 180 / Math.PI).toFixed(2);
+							}
+
+						if (parseFloat(cameraDegrees)>parseFloat(180))
+							{
+							cameraDegrees = parseFloat(cameraDegrees) - parseFloat(180);
+
+							cameraDegrees = (parseFloat(cameraDegrees) - parseFloat(180)) % 360; //angulo opuesto
+
+							camera.rotation.y = (cameraDegrees * Math.PI)/180;
+							cameraDegrees = (camera.rotation.y * 180 / Math.PI).toFixed(2);
+							}
+
+						if (parseFloat(objectDegrees).toFixed(0)!=parseFloat(-180))
+							{
+							destinyRotation=selectedObject.rotation.y;
+							}
+							else
+							{
+							if (cameraDegrees<0)
+								{
+								destinyRotation = (-180 * Math.PI)/180;
+								}
+								else
+								{
+								destinyRotation = (180 * Math.PI)/180;
+								}
+							}
+
+						if (selectedObject.rotation.y== -Math.PI)
+							{
+							camPos = new THREE.Vector3(camera.position.x, camera.position.y, camera.position.z); // Holds current camera position
+							targetPos = new THREE.Vector3(camera.position.x, camera.position.y, selectedObject.position.z - 50); // Target position
+							}
+						else if (selectedObject.rotation.y== 0)
+							{
+							camPos = new THREE.Vector3(camera.position.x, camera.position.y, camera.position.z); // Holds current camera position
+							targetPos = new THREE.Vector3(camera.position.x, camera.position.y, selectedObject.position.z + 50); // Target position
+							}
+							else
+							{
+							camPos = new THREE.Vector3(camera.position.x, camera.position.y, camera.position.z); // Holds current camera position
+							targetPos = new THREE.Vector3(camera.position.x, camera.position.y, selectedObject.position.z); // Target position
+							}
+						}
+					}
+				}
+
+			function smod(x, m)
+				{
+				return x-((Math.floor(x/m + 0.5))*m);
+				}
+			
+			function unwrap(x, m, init)
+				{
+				var yi = init || 0;
+				var y = [];
+				for (var i = 0; i < x.length; ++i)
+					{
+					yi += smod(x[i]-yi, m);
+					y[i] = yi;
+					}    
+				return y;
+				}
+
+			function welcome()
+				{
+				if (voiceGuide!=undefined)
+					{
+					voiceGuide.pause();
+					}
+				voiceGuide = new Audio("3DArtMuseum.mp3");
+				voiceGuide.onended = function()
+					{
+					document.getElementById("info").style.display = "none";
+					};
+				voiceGuide.volume = voiceGuideVolume;
+				voiceGuide.play();
+				document.getElementById("info").style.display = "block";
+				document.getElementById("info").innerHTML = "Bienvenido al museo virtual desarrollado por Leonardo Javier Russo. Haga click o toque una obra de arte para acercarse a ella y escuchar su historia.";
+				}
+
+			document.getElementById("controls_minus").onclick = function()
+				{
+				if (voiceGuideVolume-0.1>0)
+					{
+					voiceGuideVolume = voiceGuideVolume - 0.1;
+					voiceGuide.volume = voiceGuideVolume;
+					}
+				}
+
+			document.getElementById("controls_plus").onclick = function()
+				{
+				if (voiceGuideVolume+0.1<1.1)
+					{
+					voiceGuideVolume = voiceGuideVolume + 0.1;
+					voiceGuide.volume = voiceGuideVolume;
+					}
+				}
+
+			document.getElementById("info").onclick = function()
+				{
+				document.getElementById("info").style.display = "none";
+				}
+
+			init();
+			welcome();
+		</script>
+	</body>
+</html>
