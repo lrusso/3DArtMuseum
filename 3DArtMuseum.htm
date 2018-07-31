@@ -211,7 +211,7 @@
 				image04.rotation.y = Math.PI/2;
 				objectDescription = [];
 				objectDescription[0] = "Art_04.mp3";
-				objectDescription[1] = "El Retrato de Lisa Gherardini, esposa de Francesco del Giocondo, m&aacute;s conocido como La Gioconda o Mona Lisa, es una obra pict&oacute;rica del pintor renacentista italiano Leonardo da Vinci. Fue adquirida por el rey Francisco I de Francia a comienzos del siglo XVI y desde entonces es propiedad del Estado Franc&eacute;s. Se halla expuesta en el Museo del Louvre de Par&iacute;s, siendo, sin duda, la joya de sus colecciones.";
+				objectDescription[1] = "El Retrato de Lisa Gherardini, esposa de Francesco del Giocondo, m&aacute;s conocido como La Gioconda o Mona Lisa, es una obra pict&oacute;rica del pintor renacentista italiano Leonardo da Vinci. Fue adquirida por el rey Francisco I de Francia a comienzos del siglo XVI y desde entonces es propiedad del Estado Franc&eacute;s. Se halla expuesta en el Museo del Louvre de Par&iacute;s, siendo, sin duda, la joya de sus colecciones. Su nombre, La Gioconda, deriva de la tesis m&aacute;s aceptada acerca de la identidad de la modelo: la esposa de Francesco Bartolomeo de Giocondo, que realmente se llamaba Lisa Gherardini, de donde viene su otro nombre: Mona (se&ntilde;ora, en el italiano antiguo) Lisa. El Museo del Louvre acepta el t&iacute;tulo completo indicado al principio como el t&iacute;tulo original de la obra, aunque no reconoce la identidad de la modelo y tan solo la acepta como una hip&oacute;tesis.";
 				image04.userData = objectDescription;
 				scene.add(image04);
 				objects.push(image04);
@@ -355,12 +355,12 @@
 				image12.rotation.y = 0;
 				objectDescription = [];
 				objectDescription[0] = "Art_12.mp3";
-				objectDescription[1] = "El nacimiento de Venus es una pintura de Sandro Botticelli. Representa una de las obras cumbres del maestro italiano. Fue realizada al temple sobre lienzo y se conserva en la Galer&iacute;a Uffizi, Florencia.";
+				objectDescription[1] = "El nacimiento de Venus es una pintura de Sandro Botticelli. Representa una de las obras cumbres del maestro italiano. Fue realizada al temple sobre lienzo y se conserva en la Galer&iacute;a Uffizi, en Florencia. Tradicionalmente se ha cre&iacute;do que esta obra, fue encargada por Lorenzo di Pierfrancesco de M&eacute;dici, primo de Lorenzo el Magn&iacute;fico, para adornar la Villa di Castello, en la campi&ntilde;a florentina. Estudios recientes indican que El nacimiento de Venus fue un encargo de otra persona para un lugar diferente. Por lo tanto, no se conoce la fecha exacta de su composici&oacute;n, ni tampoco el comitente para el cual fue ejecutado.";
 				image12.userData = objectDescription;
 				scene.add(image12);
 				objects.push(image12);
 
-				renderer = new THREE.WebGLRenderer({antialias:false});
+				renderer = new THREE.WebGLRenderer({antialias:true});
 				renderer.setSize(window.innerWidth,window.innerHeight);
 
 				container.appendChild(renderer.domElement);
