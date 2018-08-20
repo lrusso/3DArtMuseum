@@ -10,7 +10,7 @@ addToFront (picture_width, picture_location, jpg_filename, mp3_filename, text_de
 
 addToBack  (picture_width, picture_location, jpg_filename, mp3_filename, text_description_value); // BACK WALL
 
-## Example for insert a picture on the left wall
+## Example: Inserting a picture on the left wall
 
 addToLeft(35,  200, "Art_01.jpg", "Art_01.mp3", "Sample text.");
 
