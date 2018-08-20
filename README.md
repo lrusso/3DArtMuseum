@@ -1,6 +1,6 @@
 # 3D Art Museum using Three.js
 
-## Parameters for inserting a picture:
+## Functions for inserting a picture:
 
 addToLeft  (picture_width, picture_location, jpg_filename, mp3_filename, text_description_value); // LEFT WALL
 
