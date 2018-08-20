@@ -104,7 +104,7 @@ k;l++){var q=e[l];if(q.code===g){h=q;++h.usedTimes;break}}void 0===h&&(h=new hg(
 else{if(void 0===c.__webglInit)break a;a.deleteTexture(c.__webglTexture)}d.remove(b)}g.textures--}function u(b){b=b.target;b.removeEventListener("dispose",u);var c=d.get(b),e=d.get(b.texture);if(b){void 0!==e.__webglTexture&&a.deleteTexture(e.__webglTexture);b.depthTexture&&b.depthTexture.dispose();if(b.isWebGLRenderTargetCube)for(e=0;6>e;e++)a.deleteFramebuffer(c.__webglFramebuffer[e]),c.__webglDepthbuffer&&a.deleteRenderbuffer(c.__webglDepthbuffer[e]);else a.deleteFramebuffer(c.__webglFramebuffer),
 c.__webglDepthbuffer&&a.deleteRenderbuffer(c.__webglDepthbuffer);d.remove(b.texture);d.remove(b)}g.textures--}function r(b,q){var u=d.get(b);if(0<b.version&&u.__version!==b.version){var r=b.image;if(void 0===r)console.warn("THREE.WebGLRenderer: Texture marked for update but image is undefined",b);else if(!1===r.complete)console.warn("THREE.WebGLRenderer: Texture marked for update but image is incomplete",b);else{void 0===u.__webglInit&&(u.__webglInit=!0,b.addEventListener("dispose",n),u.__webglTexture=
 a.createTexture(),g.textures++);c.activeTexture(a.TEXTURE0+q);c.bindTexture(a.TEXTURE_2D,u.__webglTexture);a.pixelStorei(a.UNPACK_FLIP_Y_WEBGL,b.flipY);a.pixelStorei(a.UNPACK_PREMULTIPLY_ALPHA_WEBGL,b.premultiplyAlpha);a.pixelStorei(a.UNPACK_ALIGNMENT,b.unpackAlignment);var v=h(b.image,e.maxTextureSize);(1001!==b.wrapS||1001!==b.wrapT||1003!==b.minFilter&&1006!==b.minFilter)&&!1===k(v)&&(q=v,q instanceof HTMLImageElement||q instanceof HTMLCanvasElement||q instanceof ImageBitmap?(r=document.createElementNS("http://www.w3.org/1999/xhtml",
-"canvas"),r.width=R.floorPowerOfTwo(q.width),r.height=R.floorPowerOfTwo(q.height),r.getContext("2d").drawImage(q,0,0,r.width,r.height),console.warn("THREE.WebGLRenderer: image is not power of two ("+q.width+"x"+q.height+"). Resized to "+r.width+"x"+r.height,q),v=r):v=q);q=k(v);var r=f.convert(b.format),B=f.convert(b.type);m(a.TEXTURE_2D,b,q);var p=b.mipmaps;if(b.isDepthTexture){p=a.DEPTH_COMPONENT;if(1015===b.type){if(!y)throw Error("Float Depth Texture only supported in WebGL2.0");p=a.DEPTH_COMPONENT32F}else y&&
+"canvas"),r.width=R.floorPowerOfTwo(q.width),r.height=R.floorPowerOfTwo(q.height),r.getContext("2d").drawImage(q,0,0,r.width,r.height),v=r):v=q);q=k(v);var r=f.convert(b.format),B=f.convert(b.type);m(a.TEXTURE_2D,b,q);var p=b.mipmaps;if(b.isDepthTexture){p=a.DEPTH_COMPONENT;if(1015===b.type){if(!y)throw Error("Float Depth Texture only supported in WebGL2.0");p=a.DEPTH_COMPONENT32F}else y&&
 (p=a.DEPTH_COMPONENT16);1026===b.format&&p===a.DEPTH_COMPONENT&&1012!==b.type&&1014!==b.type&&(console.warn("THREE.WebGLRenderer: Use UnsignedShortType or UnsignedIntType for DepthFormat DepthTexture."),b.type=1012,B=f.convert(b.type));1027===b.format&&(p=a.DEPTH_STENCIL,1020!==b.type&&(console.warn("THREE.WebGLRenderer: Use UnsignedInt248Type for DepthStencilFormat DepthTexture."),b.type=1020,B=f.convert(b.type)));c.texImage2D(a.TEXTURE_2D,0,p,v.width,v.height,0,r,B,null)}else if(b.isDataTexture)if(0<
 p.length&&q){for(var t=0,x=p.length;t<x;t++)v=p[t],c.texImage2D(a.TEXTURE_2D,t,r,v.width,v.height,0,r,B,v.data);b.generateMipmaps=!1}else c.texImage2D(a.TEXTURE_2D,0,r,v.width,v.height,0,r,B,v.data);else if(b.isCompressedTexture)for(t=0,x=p.length;t<x;t++)v=p[t],1023!==b.format&&1022!==b.format?-1<c.getCompressedTextureFormats().indexOf(r)?c.compressedTexImage2D(a.TEXTURE_2D,t,r,v.width,v.height,0,v.data):console.warn("THREE.WebGLRenderer: Attempt to load unsupported compressed texture format in .uploadTexture()"):
 c.texImage2D(a.TEXTURE_2D,t,r,v.width,v.height,0,r,B,v.data);else if(0<p.length&&q){t=0;for(x=p.length;t<x;t++)v=p[t],c.texImage2D(a.TEXTURE_2D,t,r,r,B,v);b.generateMipmaps=!1}else c.texImage2D(a.TEXTURE_2D,0,r,r,B,v);l(b,q)&&a.generateMipmap(a.TEXTURE_2D);u.__version=b.version;if(b.onUpdate)b.onUpdate(b);return}}c.activeTexture(a.TEXTURE0+q);c.bindTexture(a.TEXTURE_2D,u.__webglTexture)}function m(c,g,h){h?(a.texParameteri(c,a.TEXTURE_WRAP_S,f.convert(g.wrapS)),a.texParameteri(c,a.TEXTURE_WRAP_T,
@@ -885,7 +885,471 @@ return new uc(a,b)};m.Uint8Attribute=function(a,b){console.warn("THREE.Uint8Attr
 function(a,b){console.warn("THREE.Uint16Attribute has been removed. Use new THREE.Uint16BufferAttribute() instead.");return new eb(a,b)};m.Int32Attribute=function(a,b){console.warn("THREE.Int32Attribute has been removed. Use new THREE.Int32BufferAttribute() instead.");return new yc(a,b)};m.Uint32Attribute=function(a,b){console.warn("THREE.Uint32Attribute has been removed. Use new THREE.Uint32BufferAttribute() instead.");return new fb(a,b)};m.Float32Attribute=function(a,b){console.warn("THREE.Float32Attribute has been removed. Use new THREE.Float32BufferAttribute() instead.");
 return new z(a,b)};m.Float64Attribute=function(a,b){console.warn("THREE.Float64Attribute has been removed. Use new THREE.Float64BufferAttribute() instead.");return new zc(a,b)};m.ClosedSplineCurve3=ef;m.SplineCurve3=ff;m.Spline=se;m.AxisHelper=function(a){console.warn("THREE.AxisHelper has been renamed to THREE.AxesHelper.");return new id(a)};m.BoundingBoxHelper=function(a,b){console.warn("THREE.BoundingBoxHelper has been deprecated. Creating a THREE.BoxHelper instead.");return new Bb(a,b)};m.EdgesHelper=
 function(a,b){console.warn("THREE.EdgesHelper has been removed. Use THREE.EdgesGeometry instead.");return new P(new bc(a.geometry),new Y({color:void 0!==b?b:16777215}))};m.WireframeHelper=function(a,b){console.warn("THREE.WireframeHelper has been removed. Use THREE.WireframeGeometry instead.");return new P(new Pb(a.geometry),new Y({color:void 0!==b?b:16777215}))};m.XHRLoader=function(a){console.warn("THREE.XHRLoader has been renamed to THREE.FileLoader.");return new Ka(a)};m.BinaryTextureLoader=function(a){console.warn("THREE.BinaryTextureLoader has been renamed to THREE.DataTextureLoader.");
-return new $d(a)};m.GeometryUtils={merge:function(a,b,c){console.warn("THREE.GeometryUtils: .merge() has been moved to Geometry. Use geometry.merge( geometry2, matrix, materialIndexOffset ) instead.");if(b.isMesh){b.matrixAutoUpdate&&b.updateMatrix();var d=b.matrix;b=b.geometry}a.merge(b,d,c)},center:function(a){console.warn("THREE.GeometryUtils: .center() has been moved to Geometry. Use geometry.center() instead.");return a.center()}};m.ImageUtils={crossOrigin:void 0,loadTexture:function(a,b,c,d){console.warn("THREE.ImageUtils.loadTexture has been deprecated. Use THREE.TextureLoader() instead.");
-var e=new ud;e.setCrossOrigin(this.crossOrigin);a=e.load(a,c,void 0,d);b&&(a.mapping=b);return a},loadTextureCube:function(a,b,c,d){console.warn("THREE.ImageUtils.loadTextureCube has been deprecated. Use THREE.CubeTextureLoader() instead.");var e=new ae;e.setCrossOrigin(this.crossOrigin);a=e.load(a,c,void 0,d);b&&(a.mapping=b);return a},loadCompressedTexture:function(){console.error("THREE.ImageUtils.loadCompressedTexture has been removed. Use THREE.DDSLoader instead.")},loadCompressedTextureCube:function(){console.error("THREE.ImageUtils.loadCompressedTextureCube has been removed. Use THREE.DDSLoader instead.")}};
+return new $d(a)};m.GeometryUtils={merge:function(a,b,c){console.warn("THREE.GeometryUtils: .merge() has been moved to Geometry. Use geometry.merge( geometry2, matrix, materialIndexOffset ) instead.");if(b.isMesh){b.matrixAutoUpdate&&b.updateMatrix();var d=b.matrix;b=b.geometry}a.merge(b,d,c)},center:function(a){console.warn("THREE.GeometryUtils: .center() has been moved to Geometry. Use geometry.center() instead.");return a.center()}};m.ImageUtils={crossOrigin:void 0,loadTexture:function(a,b,c,d){var e=new ud;e.setCrossOrigin(this.crossOrigin);a=e.load(a,c,void 0,d);b&&(a.mapping=b);return a},loadTextureCube:function(a,b,c,d){console.warn("THREE.ImageUtils.loadTextureCube has been deprecated. Use THREE.CubeTextureLoader() instead.");var e=new ae;e.setCrossOrigin(this.crossOrigin);a=e.load(a,c,void 0,d);b&&(a.mapping=b);return a},loadCompressedTexture:function(){console.error("THREE.ImageUtils.loadCompressedTexture has been removed. Use THREE.DDSLoader instead.")},loadCompressedTextureCube:function(){console.error("THREE.ImageUtils.loadCompressedTextureCube has been removed. Use THREE.DDSLoader instead.")}};
 m.Projector=function(){console.error("THREE.Projector has been moved to /examples/js/renderers/Projector.js.");this.projectVector=function(a,b){console.warn("THREE.Projector: .projectVector() is now vector.project().");a.project(b)};this.unprojectVector=function(a,b){console.warn("THREE.Projector: .unprojectVector() is now vector.unproject().");a.unproject(b)};this.pickingRay=function(){console.error("THREE.Projector: .pickingRay() is now raycaster.setFromCamera().")}};m.CanvasRenderer=function(){console.error("THREE.CanvasRenderer has been moved to /examples/js/renderers/CanvasRenderer.js");
 this.domElement=document.createElementNS("http://www.w3.org/1999/xhtml","canvas");this.clear=function(){};this.render=function(){};this.setClearColor=function(){};this.setSize=function(){}};Object.defineProperty(m,"__esModule",{value:!0})});
+
+var container, light;
+var camera, scene, renderer, raycaster, mouse;
+var objects;
+var selectedObject;
+var objectDescription;
+
+var voiceGuide;
+var voiceGuideVolume = 1;
+
+var camPos = null;
+var targetPos = null;
+
+var targetRotation = 0;
+var targetRotationOnMouseDown = 0;
+var targetObject;
+var targetObjectOffsetY = 0;
+var mouseX = 0;
+var mouseXOnMouseDown = 0;
+
+var destinyRotation = null;
+
+var windowHalfX;
+var windowHalfY;
+
+document.getElementById("controls_minus").onclick = function()
+	{
+	if (voiceGuideVolume-0.1>0)
+		{
+		voiceGuideVolume = voiceGuideVolume - 0.1;
+		voiceGuide.volume = voiceGuideVolume;
+		}
+	}
+
+document.getElementById("controls_plus").onclick = function()
+	{
+	if (voiceGuideVolume+0.1<1.1)
+		{
+		voiceGuideVolume = voiceGuideVolume + 0.1;
+		voiceGuide.volume = voiceGuideVolume;
+		}
+	}
+
+document.getElementById("info").onclick = function()
+	{
+	document.getElementById("info").style.display = "none";
+	}
+
+function onWindowResize()
+	{
+	camera.aspect = window.innerWidth / (window.innerHeight);
+	camera.updateProjectionMatrix();
+	renderer.setSize(window.innerWidth, window.innerHeight);
+	}
+
+function animate()
+	{
+	requestAnimationFrame(animate);
+
+	// FOR ROTATION WHEN A PICTURE IS NOT SELECTED
+	if (camPos==null)
+		{
+		var _iR = unwrap([camera.rotation.y, targetRotation], Math.PI*2);
+		var _dR = _iR[1] - _iR[0];
+		if(Math.abs(_dR) > 0.002)
+			{
+			_rY = camera.rotation.y + (_dR * 0.06);
+			camera.rotation.y = _rY;
+
+			var cameraDegrees = (camera.rotation.y * 180 / Math.PI).toFixed(0);
+			if (parseFloat(cameraDegrees)>parseFloat(360) || parseFloat(cameraDegrees)<parseFloat(-360))
+				{
+				camera.rotation.y = (0 * Math.PI)/180;
+				}
+			}
+		}
+
+	// FOR MOVING TO A SELECTED PICTURE
+	else if (camPos!=null)
+		{
+		camPos.lerp(targetPos, 0.04);
+	    camera.position.copy(camPos);
+
+		camera.rotation.y = lerp(camera.rotation.y,destinyRotation,0.04);
+
+		var checkerX1 = parseFloat(camera.position.x).toFixed(0);
+		var checkerX2 = parseFloat(targetPos.x).toFixed(0);
+		var checkerZ1 = parseFloat(camera.position.z).toFixed(0);
+		var checkerZ2 = parseFloat(targetPos.z).toFixed(0);
+		var checkerRotation1 = parseFloat(camera.rotation.y).toFixed(2);
+		var checkerRotation2 = parseFloat(destinyRotation).toFixed(2);
+
+		if (checkerX1=="-0"){checkerX1="0";}
+		if (checkerRotation1=="-0.00"){checkerRotation1="0.00";}
+
+		if (checkerX1==checkerX2 &&checkerZ1==checkerZ2 && checkerRotation1==checkerRotation2)
+			{
+			camPos = null;
+			targetPos = null;
+			targetRotation = camera.rotation.y;
+
+			// WHEN THE CAMERA IS IN FRONT OF THE PICTURE, THE AUDIO BEGINS
+			if (voiceGuide!=undefined)
+				{
+				voiceGuide.pause();
+				}
+			voiceGuide = new Audio(selectedObject.userData[0]);
+			voiceGuide.onended = function()
+				{
+				document.getElementById("info").style.display = "none";
+				};
+			voiceGuide.volume = voiceGuideVolume;
+			voiceGuide.play();
+			document.getElementById("info").style.display = "block";
+			document.getElementById("infotext").innerHTML = selectedObject.userData[1];
+			}
+		}
+
+	renderer.render(scene,camera);
+	}
+
+function lerp(value1, value2, amount)
+	{
+	amount = amount < 0 ? 0 : amount;
+	amount = amount > 1 ? 1 : amount;
+	return value1 + (value2 - value1) * amount;
+	}
+
+function onDocumentMouseMove(event)
+	{
+	mouseX = event.clientX - windowHalfX;
+	targetRotation = targetRotationOnMouseDown + (mouseX - mouseXOnMouseDown) * 0.0035;
+	}
+
+function onDocumentMouseUp(event)
+	{
+	document.removeEventListener("mousemove", onDocumentMouseMove, false);
+	document.removeEventListener("mouseup", onDocumentMouseUp, false);
+	document.removeEventListener("mouseout", onDocumentMouseOut, false);
+	}
+
+function onDocumentMouseOut(event)
+	{
+	document.removeEventListener("mousemove", onDocumentMouseMove, false);
+	document.removeEventListener("mouseup", onDocumentMouseUp, false);
+	document.removeEventListener("mouseout", onDocumentMouseOut, false);
+	}
+
+function onDocumentTouchStart(event)
+	{
+	if (event.touches.length == 1)
+		{
+		event.preventDefault();
+		mouseXOnMouseDown = event.touches[ 0 ].pageX - windowHalfX;
+		targetRotationOnMouseDown = targetRotation;
+		}
+	}
+
+function onDocumentTouchMove(event)
+	{
+	if (event.touches.length == 1)
+		{
+		event.preventDefault();
+		mouseX = event.touches[ 0 ].pageX - windowHalfX;
+		targetRotation = targetRotationOnMouseDown + (mouseX - mouseXOnMouseDown) * 0.002;
+		}
+	}
+
+function onDocumentMouseDown(event)
+	{
+	event.preventDefault();
+	document.addEventListener("mousemove", onDocumentMouseMove, false);
+	document.addEventListener("mouseup", onDocumentMouseUp, false);
+	document.addEventListener("mouseout", onDocumentMouseOut, false);
+	mouseXOnMouseDown = event.clientX - windowHalfX;
+	targetRotationOnMouseDown = targetRotation;
+
+	// CHECKING IF THE USER CLICKED IN A PICTURE
+	if (camPos==null)
+		{
+		mouse.x = (event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
+		mouse.y = - (event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
+		raycaster.setFromCamera(mouse,camera);
+		var intersects = raycaster.intersectObjects(objects);
+		if (intersects.length>0)
+			{
+			if (voiceGuide!=undefined)
+				{
+				voiceGuide.pause();
+				}
+			document.getElementById("info").style.display = "none";
+
+			selectedObject = intersects[0].object;
+
+			var cameraDegrees = (camera.rotation.y * 180 / Math.PI).toFixed(2);
+			var objectDegrees = (selectedObject.rotation.y * 180 / Math.PI).toFixed(2);
+			
+			if (parseFloat(cameraDegrees)<parseFloat(-180))
+				{
+				cameraDegrees = parseFloat(cameraDegrees) + parseFloat(180);
+
+				cameraDegrees = (parseFloat(cameraDegrees) + parseFloat(180)) % 360; //angulo opuesto
+
+				camera.rotation.y = (cameraDegrees * Math.PI)/180;
+				cameraDegrees = (camera.rotation.y * 180 / Math.PI).toFixed(2);
+				}
+
+			if (parseFloat(cameraDegrees)>parseFloat(180) && objectDegrees!=180)
+				{
+				cameraDegrees = parseFloat(cameraDegrees) - parseFloat(180);
+
+				cameraDegrees = (parseFloat(cameraDegrees) - parseFloat(180)) % 360; //angulo opuesto
+
+				camera.rotation.y = (cameraDegrees * Math.PI)/180;
+				cameraDegrees = (camera.rotation.y * 180 / Math.PI).toFixed(2);
+				}
+
+			if (parseFloat(objectDegrees).toFixed(0)!=parseFloat(-180))
+				{
+				destinyRotation=selectedObject.rotation.y;
+				}
+				else
+				{
+				if (cameraDegrees<0)
+					{
+					destinyRotation = (-180 * Math.PI)/180;
+					}
+					else
+					{
+					destinyRotation = (180 * Math.PI)/180;
+					}
+				}
+
+			if (selectedObject.rotation.y== 0)
+				{
+				camPos = new THREE.Vector3(camera.position.x, camera.position.y, camera.position.z); // Holds current camera position
+				targetPos = new THREE.Vector3(selectedObject.position.x, camera.position.y, selectedObject.position.z + 50); // Target position
+				}
+			else if (selectedObject.rotation.y== Math.PI / 2)
+				{
+				camPos = new THREE.Vector3(camera.position.x, camera.position.y, camera.position.z); // Holds current camera position
+				targetPos = new THREE.Vector3(selectedObject.position.x + 50, camera.position.y, selectedObject.position.z); // Target position
+				}
+			else if (selectedObject.rotation.y== -(Math.PI / 2))
+				{
+				camPos = new THREE.Vector3(camera.position.x, camera.position.y, camera.position.z); // Holds current camera position
+				targetPos = new THREE.Vector3(selectedObject.position.x - 50, camera.position.y, selectedObject.position.z); // Target position
+				}
+			else if (selectedObject.rotation.y== Math.PI)
+				{
+				camPos = new THREE.Vector3(camera.position.x, camera.position.y, camera.position.z); // Holds current camera position
+				targetPos = new THREE.Vector3(selectedObject.position.x, camera.position.y, selectedObject.position.z - 50); // Target position
+				}
+			}
+		}
+	}
+
+function smod(x, m)
+	{
+	return x-((Math.floor(x/m + 0.5))*m);
+	}
+
+function unwrap(x, m, init)
+	{
+	var yi = init || 0;
+	var y = [];
+	for (var i = 0; i < x.length; ++i)
+		{
+		yi += smod(x[i]-yi, m);
+		y[i] = yi;
+		}
+	return y;
+	}
+
+function drawRoom()
+	{
+	objects = [];
+	container = document.getElementById("container");
+	container.innerHTML= "";
+
+	windowHalfX = window.innerWidth / 2;
+	windowHalfY = window.innerHeight / 2;
+
+	camera = new THREE.PerspectiveCamera(37.8,window.innerWidth/(window.innerHeight),1,100000);
+
+	raycaster = new THREE.Raycaster();
+	mouse = new THREE.Vector2();
+
+	scene = new THREE.Scene();
+	scene.background = new THREE.Color(0x304040);
+
+	light = new THREE.HemisphereLight(0xE8E8E8,0x000000,1);
+	light.position.set(0,0,0);
+	scene.add(light);
+
+	group = new THREE.Group();
+	scene.add(group);
+
+	camera.position.set(0,0,195);
+	camera.lookAt(scene.position);	
+
+	// ADDING FLOOR
+	var floorTexture = new THREE.ImageUtils.loadTexture("Texture_Floor.jpg");
+	floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping; 
+	floorTexture.repeat.set(15,10);
+	var floorMaterial = new THREE.MeshBasicMaterial({map: floorTexture, side: THREE.DoubleSide });
+	var floorGeometry = new THREE.PlaneGeometry(1000, 1000, 0, 0);
+	var floor = new THREE.Mesh(floorGeometry, floorMaterial);
+	floor.position.y = -40;
+	floor.rotation.x = Math.PI / 2;
+	scene.add(floor);
+
+	// ADDING CEIL
+	var ceilTexture = new THREE.ImageUtils.loadTexture("Texture_Ceil.jpg");
+	ceilTexture.wrapS = ceilTexture.wrapT = THREE.RepeatWrapping; 
+	ceilTexture.repeat.set(42,42);
+	var ceilMaterial = new THREE.MeshBasicMaterial({map: ceilTexture, side: THREE.DoubleSide });
+	var ceilGeometry = new THREE.PlaneGeometry(1050, 1000, 0, 0);
+	var ceil = new THREE.Mesh(ceilGeometry, ceilMaterial);
+	ceil.position.y = 47;
+	ceil.rotation.x = Math.PI / 2;
+	scene.add(ceil);
+
+	// ADDING WALLS
+	var wallTexture = new THREE.ImageUtils.loadTexture("Texture_Wall.jpg");
+	var wallMaterial = new THREE.MeshBasicMaterial({map: wallTexture, side: THREE.DoubleSide });
+	var wallGeometry1 = new THREE.PlaneGeometry(600, 90, 0, 0);
+	var wallGeometry2 = new THREE.PlaneGeometry(600, 90, 0, 0);
+	var wallGeometry3 = new THREE.PlaneGeometry(600, 90, 0, 0);
+	var wallGeometry4 = new THREE.PlaneGeometry(600, 90, 0, 0);
+
+	var wall1 = new THREE.Mesh(wallGeometry1, wallMaterial); // FRONT
+	var wall2 = new THREE.Mesh(wallGeometry2, wallMaterial); // RIGHT
+	var wall3 = new THREE.Mesh(wallGeometry3, wallMaterial); // BACK
+	var wall4 = new THREE.Mesh(wallGeometry4, wallMaterial); // LEFT
+
+	wall1.position.y = 5;
+	wall1.position.z = -230;
+	wall1.position.x = -150;
+	wall1.rotation.x = 0;
+
+	wall2.position.y = 5;
+	wall2.position.z = 0;
+	wall2.position.x = -370;
+	wall2.rotation.y = Math.PI /2;
+
+	wall3.position.y = 5;
+	wall3.position.z = 270;
+	wall3.position.x = -150;
+	wall3.rotation.x = 0;
+
+	wall4.position.y = 5;
+	wall4.position.z = 0;
+	wall4.position.x = 50;
+	wall4.rotation.y = Math.PI /2;
+
+	scene.add(wall1);
+	scene.add(wall2);
+	scene.add(wall3);
+	scene.add(wall4);
+	}
+
+function renderRoom()
+	{
+	renderer = new THREE.WebGLRenderer({antialias:false});
+	renderer.setSize(window.innerWidth,window.innerHeight);
+
+	container.appendChild(renderer.domElement);
+
+	requestAnimationFrame(animate);
+
+	window.addEventListener("resize", onWindowResize, false);
+	document.addEventListener("mousedown", onDocumentMouseDown, false);
+	document.addEventListener("touchstart", onDocumentTouchStart, false);
+	document.addEventListener("touchmove", onDocumentTouchMove, false);
+	}
+
+function welcome(a,b)
+	{
+	if (voiceGuide!=undefined)
+		{
+		voiceGuide.pause();
+		}
+	voiceGuide = new Audio(a);
+	voiceGuide.onended = function()
+		{
+		document.getElementById("info").style.display = "none";
+		};
+	voiceGuide.volume = voiceGuideVolume;
+	voiceGuide.play();
+	document.getElementById("info").style.display = "block";
+	document.getElementById("infotext").innerHTML = b;
+	}
+
+function addToLeft(a,b,c,d,e)
+	{
+	var image3DArtTexture = new THREE.ImageUtils.loadTexture(c);
+	var image3DArtMaterial = new THREE.MeshBasicMaterial({map:image3DArtTexture});
+	var image3DArtGeometry = new THREE.PlaneGeometry(a,30,0,0);
+	var image3DArt = new THREE.Mesh(image3DArtGeometry,image3DArtMaterial);
+	image3DArt.position.y = 0;
+	image3DArt.position.z = b;
+	image3DArt.position.x = -369;
+	image3DArt.rotation.y = Math.PI/2;
+	objectDescription = [];
+	objectDescription[0] = d;
+	objectDescription[1] = e;
+	image3DArt.userData = objectDescription;
+	scene.add(image3DArt);
+	objects.push(image3DArt);
+    }
+
+function addToFront(a,b,c,d,e)
+	{
+	var image3DArtTexture = new THREE.ImageUtils.loadTexture(c);
+	var image3DArtMaterial = new THREE.MeshBasicMaterial({map:image3DArtTexture});
+	var image3DArtGeometry = new THREE.PlaneGeometry(a,30,0,0);
+	var image3DArt = new THREE.Mesh(image3DArtGeometry,image3DArtMaterial);
+	image3DArt.position.y = 0;
+	image3DArt.position.z = -229;
+	image3DArt.position.x = b;
+	image3DArt.rotation.y = 0;
+	objectDescription = [];
+	objectDescription[0] = d;
+	objectDescription[1] = e;
+	image3DArt.userData = objectDescription;
+	scene.add(image3DArt);
+	objects.push(image3DArt);
+    }
+
+function addToRight(a,b,c,d,e)
+	{
+	var image3DArtTexture = new THREE.ImageUtils.loadTexture(c);
+	var image3DArtMaterial = new THREE.MeshBasicMaterial({map:image3DArtTexture});
+	var image3DArtGeometry = new THREE.PlaneGeometry(a,30,0,0);
+	var image3DArt = new THREE.Mesh(image3DArtGeometry,image3DArtMaterial);
+	image3DArt.position.y = 0;
+	image3DArt.position.z = b;
+	image3DArt.position.x = 49;
+	image3DArt.rotation.y = -(Math.PI/2);
+	objectDescription = [];
+	objectDescription[0] = d;
+	objectDescription[1] = e;
+	image3DArt.userData = objectDescription;
+	scene.add(image3DArt);
+	objects.push(image3DArt);
+	}
+
+function addToBack(a,b,c,d,e)
+	{
+	var image3DArtTexture = new THREE.ImageUtils.loadTexture(c);
+	var image3DArtMaterial = new THREE.MeshBasicMaterial({map:image3DArtTexture});
+	var image3DArtGeometry = new THREE.PlaneGeometry(a,30,0,0);
+	var image3DArt = new THREE.Mesh(image3DArtGeometry,image3DArtMaterial);
+	image3DArt.position.y = 0;
+	image3DArt.position.z = 269;
+	image3DArt.position.x = b;
+	image3DArt.rotation.y = Math.PI;
+	objectDescription = [];
+	objectDescription[0] = d;
+	objectDescription[1] = e;
+	image3DArt.userData = objectDescription;
+	scene.add(image3DArt);
+	objects.push(image3DArt);
+	}
