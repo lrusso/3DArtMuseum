@@ -14,6 +14,6 @@ addToBack  (picture_width, picture_location, jpg_filename, mp3_filename, text_de
 
 addToLeft(35,  200, "Art_01.jpg", "Art_01.mp3", "Sample text.");
 
-## Demo:
+## Web:
 
 https://3dartmuseum.lrusso.com.ar
