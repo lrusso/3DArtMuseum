@@ -16,4 +16,4 @@ addToLeft(35,  200, "Art_01.jpg", "Art_01.mp3", "Sample text.");
 
 ## Demo:
 
-https://lrusso.github.io/3DArtMuseum/3DArtMuseum.htm
+https://3dartmuseum.lrusso.com.ar
