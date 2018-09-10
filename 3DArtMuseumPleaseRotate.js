@@ -21,10 +21,10 @@ var options =
 
 var cssRules =
     [
-    "#pleaserotate-graphic { margin-left: 0px; width: 300px; animation: pleaserotateframes ease 2s; animation-iteration-count: infinite; transform-origin: 50% 50%; -webkit-animation: pleaserotateframes ease 2s; -webkit-animation-iteration-count: infinite; -webkit-transform-origin: 50% 50%; -moz-animation: pleaserotateframes ease 2s; -moz-animation-iteration-count: infinite; -moz-transform-origin: 50% 50%; -ms-animation: pleaserotateframes ease 2s; -ms-animation-iteration-count: infinite; -ms-transform-origin: 50% 50%; }",
+    "#pleaserotate-graphic { margin-left: 0px; width: 200px; animation: pleaserotateframes ease 2s; animation-iteration-count: infinite; transform-origin: 50% 50%; -webkit-animation: pleaserotateframes ease 2s; -webkit-animation-iteration-count: infinite; -webkit-transform-origin: 50% 50%; -moz-animation: pleaserotateframes ease 2s; -moz-animation-iteration-count: infinite; -moz-transform-origin: 50% 50%; -ms-animation: pleaserotateframes ease 2s; -ms-animation-iteration-count: infinite; -ms-transform-origin: 50% 50%; }",
     "#pleaserotate-backdrop { background-color: white; top: 0; left: 0; position: fixed; width: 100%; height: 100%; }",
-    "#pleaserotate-container { width: 300px; position: absolute; top: 50%; left: 50%; margin-right: -50%; transform: translate(-50%, -50%); -webkit-transform: translate(-50%, -50%); }",
-    "#pleaserotate-message { margin-top: 20px; font-size: 2.0em; text-align: center; font-family: Verdana, Geneva, sans-serif; text-transform: uppercase }",
+    "#pleaserotate-container { width: 200px; position: absolute; top: 50%; left: 50%; margin-right: -50%; transform: translate(-50%, -50%); -webkit-transform: translate(-50%, -50%); }",
+    "#pleaserotate-message { margin-top: 20px; font-size: 1.0em; text-align: center; font-family: Verdana, Geneva, sans-serif; text-transform: uppercase }",
     "#pleaserotate-message small { opacity: .5; display: block; font-size: .6em}"
     ];
     
