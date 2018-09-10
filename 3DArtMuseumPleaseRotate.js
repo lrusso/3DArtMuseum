@@ -7,7 +7,7 @@ var init = false;
 
 var options =
     {
-    startOnPageLoad: true,
+    startOnPageLoad: false,
     onHide: function(){},
     onShow: function(){},
     forcePortrait: false,
