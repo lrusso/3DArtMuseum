@@ -889,6 +889,18 @@ return new $d(a)};m.GeometryUtils={merge:function(a,b,c){console.warn("THREE.Geo
 m.Projector=function(){console.error("THREE.Projector has been moved to /examples/js/renderers/Projector.js.");this.projectVector=function(a,b){console.warn("THREE.Projector: .projectVector() is now vector.project().");a.project(b)};this.unprojectVector=function(a,b){console.warn("THREE.Projector: .unprojectVector() is now vector.unproject().");a.unproject(b)};this.pickingRay=function(){console.error("THREE.Projector: .pickingRay() is now raycaster.setFromCamera().")}};m.CanvasRenderer=function(){console.error("THREE.CanvasRenderer has been moved to /examples/js/renderers/CanvasRenderer.js");
 this.domElement=document.createElementNS("http://www.w3.org/1999/xhtml","canvas");this.clear=function(){};this.render=function(){};this.setClearColor=function(){};this.setSize=function(){}};Object.defineProperty(m,"__esModule",{value:!0})});
 
+window.onload = function()
+	{
+	// PATCH FOR CHROME IN ORDER TO ALLOW THE AUTOSTART FUNCTION FOR THE WELCOME AUDIO
+	try
+		{
+		var context = new AudioContext();
+		}
+		catch(err)
+		{
+		}
+	}
+
 var container, light;
 var camera, scene, renderer, raycaster, mouse;
 var objects;
