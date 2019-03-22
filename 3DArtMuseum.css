@@ -1,6 +1,7 @@
 body{margin:0;padding:0;overflow:hidden;-webkit-user-select:none;-moz-user-select:none;user-select:none;text-align:center;}
 #pleasewait{position:absolute;top:0;left:0;right:0;bottom:0;z-index:800;background-color:#deeff5;}
 #pleasewait table{width:100%;height:80%;}
+#pleasewait table td{font-family:Arial;font-size:20px;}
 #pleasewait img{width:70%;}
 #pleasewaitcontainer{position:absolute;bottom:0;width:100%;height:100px;}
 #buttonenter{position:absolute;bottom:0;width:100%;height:100px;z-index:801;display:none;}
