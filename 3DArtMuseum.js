@@ -913,6 +913,9 @@ var destinyRotation = null;
 var windowHalfX;
 var windowHalfY;
 
+var welcomeFile = "";
+var welcomeText = "";
+
 document.getElementById("controls_minus").onclick = function()
 	{
 	if (voiceGuideVolume-0.1>0)
@@ -1018,128 +1021,146 @@ function lerp(value1, value2, amount)
 
 function onDocumentMouseMove(event)
 	{
-	mouseX = event.clientX - windowHalfX;
-	targetRotation = targetRotationOnMouseDown + (mouseX - mouseXOnMouseDown) * 0.0035;
+	if (document.getElementById("pleasewait").style.display=="none")
+		{
+		mouseX = event.clientX - windowHalfX;
+		targetRotation = targetRotationOnMouseDown + (mouseX - mouseXOnMouseDown) * 0.0035;
+		}
 	}
 
 function onDocumentMouseUp(event)
 	{
-	document.removeEventListener("mousemove", onDocumentMouseMove, false);
-	document.removeEventListener("mouseup", onDocumentMouseUp, false);
-	document.removeEventListener("mouseout", onDocumentMouseOut, false);
+	if (document.getElementById("pleasewait").style.display=="none")
+		{
+		document.removeEventListener("mousemove", onDocumentMouseMove, false);
+		document.removeEventListener("mouseup", onDocumentMouseUp, false);
+		document.removeEventListener("mouseout", onDocumentMouseOut, false);
+		}
 	}
 
 function onDocumentMouseOut(event)
 	{
-	document.removeEventListener("mousemove", onDocumentMouseMove, false);
-	document.removeEventListener("mouseup", onDocumentMouseUp, false);
-	document.removeEventListener("mouseout", onDocumentMouseOut, false);
+	if (document.getElementById("pleasewait").style.display=="none")
+		{
+		document.removeEventListener("mousemove", onDocumentMouseMove, false);
+		document.removeEventListener("mouseup", onDocumentMouseUp, false);
+		document.removeEventListener("mouseout", onDocumentMouseOut, false);
+		}
 	}
 
 function onDocumentTouchStart(event)
 	{
-	if (event.touches.length == 1)
+	if (document.getElementById("pleasewait").style.display=="none")
 		{
-		event.preventDefault();
-		mouseXOnMouseDown = event.touches[ 0 ].pageX - windowHalfX;
-		targetRotationOnMouseDown = targetRotation;
+		if (event.touches.length == 1)
+			{
+			event.preventDefault();
+			mouseXOnMouseDown = event.touches[ 0 ].pageX - windowHalfX;
+			targetRotationOnMouseDown = targetRotation;
+			}
 		}
 	}
 
 function onDocumentTouchMove(event)
 	{
-	if (event.touches.length == 1)
+	if (document.getElementById("pleasewait").style.display=="none")
 		{
-		event.preventDefault();
-		mouseX = event.touches[ 0 ].pageX - windowHalfX;
-		targetRotation = targetRotationOnMouseDown + (mouseX - mouseXOnMouseDown) * 0.002;
+		if (event.touches.length == 1)
+			{
+			event.preventDefault();
+			mouseX = event.touches[ 0 ].pageX - windowHalfX;
+			targetRotation = targetRotationOnMouseDown + (mouseX - mouseXOnMouseDown) * 0.002;
+			}
 		}
 	}
 
 function onDocumentMouseDown(event)
 	{
-	event.preventDefault();
-	document.addEventListener("mousemove", onDocumentMouseMove, false);
-	document.addEventListener("mouseup", onDocumentMouseUp, false);
-	document.addEventListener("mouseout", onDocumentMouseOut, false);
-	mouseXOnMouseDown = event.clientX - windowHalfX;
-	targetRotationOnMouseDown = targetRotation;
-
-	// CHECKING IF THE USER CLICKED IN A PICTURE
-	if (camPos==null)
+	if (document.getElementById("pleasewait").style.display=="none")
 		{
-		mouse.x = (event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
-		mouse.y = - (event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
-		raycaster.setFromCamera(mouse,camera);
-		var intersects = raycaster.intersectObjects(objects);
-		if (intersects.length>0)
+		event.preventDefault();
+		document.addEventListener("mousemove", onDocumentMouseMove, false);
+		document.addEventListener("mouseup", onDocumentMouseUp, false);
+		document.addEventListener("mouseout", onDocumentMouseOut, false);
+		mouseXOnMouseDown = event.clientX - windowHalfX;
+		targetRotationOnMouseDown = targetRotation;
+
+		// CHECKING IF THE USER CLICKED IN A PICTURE
+		if (camPos==null)
 			{
-			if (voiceGuide!=undefined)
+			mouse.x = (event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
+			mouse.y = - (event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
+			raycaster.setFromCamera(mouse,camera);
+			var intersects = raycaster.intersectObjects(objects);
+			if (intersects.length>0)
 				{
-				voiceGuide.pause();
-				}
-			document.getElementById("info").style.display = "none";
-
-			selectedObject = intersects[0].object;
-
-			var cameraDegrees = (camera.rotation.y * 180 / Math.PI).toFixed(2);
-			var objectDegrees = (selectedObject.rotation.y * 180 / Math.PI).toFixed(2);
-			
-			if (parseFloat(cameraDegrees)<parseFloat(-180))
-				{
-				cameraDegrees = parseFloat(cameraDegrees) + parseFloat(180);
-
-				cameraDegrees = (parseFloat(cameraDegrees) + parseFloat(180)) % 360; //angulo opuesto
-
-				camera.rotation.y = (cameraDegrees * Math.PI)/180;
-				cameraDegrees = (camera.rotation.y * 180 / Math.PI).toFixed(2);
-				}
-
-			if (parseFloat(cameraDegrees)>parseFloat(180) && objectDegrees!=180)
-				{
-				cameraDegrees = parseFloat(cameraDegrees) - parseFloat(180);
-
-				cameraDegrees = (parseFloat(cameraDegrees) - parseFloat(180)) % 360; //angulo opuesto
-
-				camera.rotation.y = (cameraDegrees * Math.PI)/180;
-				cameraDegrees = (camera.rotation.y * 180 / Math.PI).toFixed(2);
-				}
-
-			if (parseFloat(objectDegrees).toFixed(0)!=parseFloat(-180))
-				{
-				destinyRotation=selectedObject.rotation.y;
-				}
-				else
-				{
-				if (cameraDegrees<0)
+				if (voiceGuide!=undefined)
 					{
-					destinyRotation = (-180 * Math.PI)/180;
+					voiceGuide.pause();
+					}
+				document.getElementById("info").style.display = "none";
+
+				selectedObject = intersects[0].object;
+
+				var cameraDegrees = (camera.rotation.y * 180 / Math.PI).toFixed(2);
+				var objectDegrees = (selectedObject.rotation.y * 180 / Math.PI).toFixed(2);
+
+				if (parseFloat(cameraDegrees)<parseFloat(-180))
+					{
+					cameraDegrees = parseFloat(cameraDegrees) + parseFloat(180);
+
+					cameraDegrees = (parseFloat(cameraDegrees) + parseFloat(180)) % 360; //angulo opuesto
+
+					camera.rotation.y = (cameraDegrees * Math.PI)/180;
+					cameraDegrees = (camera.rotation.y * 180 / Math.PI).toFixed(2);
+					}
+
+				if (parseFloat(cameraDegrees)>parseFloat(180) && objectDegrees!=180)
+					{
+					cameraDegrees = parseFloat(cameraDegrees) - parseFloat(180);
+
+					cameraDegrees = (parseFloat(cameraDegrees) - parseFloat(180)) % 360; //angulo opuesto
+
+					camera.rotation.y = (cameraDegrees * Math.PI)/180;
+					cameraDegrees = (camera.rotation.y * 180 / Math.PI).toFixed(2);
+					}
+
+				if (parseFloat(objectDegrees).toFixed(0)!=parseFloat(-180))
+					{
+					destinyRotation=selectedObject.rotation.y;
 					}
 					else
 					{
-					destinyRotation = (180 * Math.PI)/180;
+					if (cameraDegrees<0)
+						{
+						destinyRotation = (-180 * Math.PI)/180;
+						}
+						else
+						{
+						destinyRotation = (180 * Math.PI)/180;
+						}
 					}
-				}
 
-			if (selectedObject.rotation.y== 0)
-				{
-				camPos = new THREE.Vector3(camera.position.x, camera.position.y, camera.position.z); // Holds current camera position
-				targetPos = new THREE.Vector3(selectedObject.position.x, camera.position.y, selectedObject.position.z + 50); // Target position
-				}
-			else if (selectedObject.rotation.y== Math.PI / 2)
-				{
-				camPos = new THREE.Vector3(camera.position.x, camera.position.y, camera.position.z); // Holds current camera position
-				targetPos = new THREE.Vector3(selectedObject.position.x + 50, camera.position.y, selectedObject.position.z); // Target position
-				}
-			else if (selectedObject.rotation.y== -(Math.PI / 2))
-				{
-				camPos = new THREE.Vector3(camera.position.x, camera.position.y, camera.position.z); // Holds current camera position
-				targetPos = new THREE.Vector3(selectedObject.position.x - 50, camera.position.y, selectedObject.position.z); // Target position
-				}
-			else if (selectedObject.rotation.y== Math.PI)
-				{
-				camPos = new THREE.Vector3(camera.position.x, camera.position.y, camera.position.z); // Holds current camera position
-				targetPos = new THREE.Vector3(selectedObject.position.x, camera.position.y, selectedObject.position.z - 50); // Target position
+				if (selectedObject.rotation.y== 0)
+					{
+					camPos = new THREE.Vector3(camera.position.x, camera.position.y, camera.position.z); // Holds current camera position
+					targetPos = new THREE.Vector3(selectedObject.position.x, camera.position.y, selectedObject.position.z + 50); // Target position
+					}
+				else if (selectedObject.rotation.y== Math.PI / 2)
+					{
+					camPos = new THREE.Vector3(camera.position.x, camera.position.y, camera.position.z); // Holds current camera position
+					targetPos = new THREE.Vector3(selectedObject.position.x + 50, camera.position.y, selectedObject.position.z); // Target position
+					}
+				else if (selectedObject.rotation.y== -(Math.PI / 2))
+					{
+					camPos = new THREE.Vector3(camera.position.x, camera.position.y, camera.position.z); // Holds current camera position
+					targetPos = new THREE.Vector3(selectedObject.position.x - 50, camera.position.y, selectedObject.position.z); // Target position
+					}
+				else if (selectedObject.rotation.y== Math.PI)
+					{
+					camPos = new THREE.Vector3(camera.position.x, camera.position.y, camera.position.z); // Holds current camera position
+					targetPos = new THREE.Vector3(selectedObject.position.x, camera.position.y, selectedObject.position.z - 50); // Target position
+					}
 				}
 			}
 		}
@@ -1267,6 +1288,14 @@ function renderRoom()
 
 function welcome(a,b)
 	{
+	welcomeFile = a;
+	welcomeText = b;
+	}
+
+function welcomeSpeak()
+	{
+	a = welcomeFile;
+	b = welcomeText;
 	if (voiceGuide!=undefined)
 		{
 		voiceGuide.pause();
@@ -1316,7 +1345,7 @@ function addToFront(a,b,c,d,e)
 	image3DArt.userData = objectDescription;
 	scene.add(image3DArt);
 	objects.push(image3DArt);
-    }
+	}
 
 function addToRight(a,b,c,d,e)
 	{
@@ -1353,3 +1382,16 @@ function addToBack(a,b,c,d,e)
 	scene.add(image3DArt);
 	objects.push(image3DArt);
 	}
+
+document.getElementById("buttonenter").onclick = function()
+	{
+	document.getElementById("pleasewait").style.display="none";
+	document.getElementById("buttonenter").style.display="none";
+	welcomeSpeak();
+	};
+
+window.onload = function()
+	{
+	document.getElementById("buttonenter").style.display="block";
+	document.getElementById("pleasewaitcontainer").style.display="none";
+	};
