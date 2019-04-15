@@ -1,8 +1,7 @@
 # 3D Art Museum using Three.js
 
 ## Web
-
-https://3dartmuseum.lrusso.com.ar
+https://lrusso.github.io/3DArtMuseum/3DArtMuseum.htm
 
 ## Functions for inserting a picture
 
